@@ -54,7 +54,7 @@ table {
   border: true;
   border-spacing: 10px;
 }
-tbody {
+tbody, tfoot {
   text-align: left;
 }
 div.tools {

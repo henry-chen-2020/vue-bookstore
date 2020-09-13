@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <BookList v-bind:books="books" 
-      v-on:refresh="refresh" v-on:delete-all="deleteAll" />
+    <BookList v-bind:books="books" v-on:refresh="refresh" v-on:delete-all="deleteAll" />
   </div>
 </template>
 
@@ -32,7 +31,7 @@ const BOOKS = [{
       }];
 
 export default {
-  name: 'App',
+  name: 'home',
   components: {
     BookList
   },
@@ -80,19 +79,11 @@ export default {
     this.fetchBooks();
     updateBus.$on('add-a-book', (payload) => this.addBook(payload));
     updateBus.$on('delete-book', (bookID) => this.deleteBook(bookID));
-}
+  }
 }
 </script>
 
 <style>
-div.home {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: left; */
-  color: #2c3e50;
-  margin-top: 60px;
-}
 button {
   margin: 10px;
   border-radius: 7px;
