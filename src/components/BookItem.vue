@@ -6,7 +6,7 @@
     <td class="cell">{{book.Genre}}</td>
     <td class="action">
       <button type="submit" disabled>Edit</button>
-      <button type="submit" disabled>Delete</button>
+      <button v-on:click="$emit('del-a-book', book.ID)">Delete</button>
     </td>
   </tr>
 </template>

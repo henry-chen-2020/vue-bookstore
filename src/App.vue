@@ -2,7 +2,8 @@
   <div id="app">
     <Header />
     <BookList v-bind:books="books" 
-      v-on:add-a-book="addBook" v-on:refresh="refresh" v-on:delete-all="deleteAll" />
+      v-on:add-a-book="addBook" v-on:refresh="refresh" 
+      v-on:del-a-book="delBook" v-on:delete-all="deleteAll" />
   </div>
 </template>
 
@@ -45,6 +46,10 @@ export default {
       console.log("#app: add a book", payload);
       this.books = [...this.books, payload];
       console.log('books: ' + this.books.length);
+    },
+    delBook(id) {
+      console.log('delete a book', id);
+      this.books = this.books.filter(book => book.ID != id);
     }
   },
   data() {
