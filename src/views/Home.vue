@@ -2,13 +2,13 @@
   <div class="home">
     <BookList v-bind:books="books" 
       v-on:add-a-book="addBook" v-on:refresh="refresh" 
-      v-on:del-a-book="delBook" v-on:delete-all="deleteAll" />
+      v-on:delete-book="deleteBook" v-on:delete-all="deleteAll" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
+// import axios from 'axios'
 import uuid from 'uuid'
 import BookList from '../components/BookList'
 const BOOKS = [{
@@ -34,6 +34,7 @@ export default {
     refresh() {
       console.log("refersh");
       this.books = BOOKS;
+      this.fetchBooks();
     },
     deleteAll() {
       console.log("delete all");
@@ -45,9 +46,16 @@ export default {
       this.books = [...this.books, payload];
       console.log('books: ' + this.books.length);
     },
-    delBook(id) {
+    deleteBook(id) {
       console.log('delete a book', id);
       this.books = this.books.filter(book => book.ID != id);
+    },
+    fetchBooks() {
+    // axios.get('http://localhost:51946/books')
+    // axios.get('http://10.24.123.250:51946/books')
+    // .then(resp => this.books = resp.data)
+    // .catch(err => console.log('=====> fetch error', err));
+
     }
   },
   data() {
@@ -57,11 +65,8 @@ export default {
   },
   created() {
     this.books = BOOKS;
-    // axios.get('http://localhost:51946/books')
-    axios.get('http://10.24.123.250:51946/books')
-    // .then(resp => this.books = resp.data)
-    // .catch(err => console.log('=====> fetch error', err));
-  }
+    this.fetchBooks();
+}
 }
 </script>
 

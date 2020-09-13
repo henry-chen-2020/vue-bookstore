@@ -7,7 +7,7 @@
     <table>
       <thead><BookHead /></thead>
       <tbody v-bind:key="book.ID" v-for="book in books">
-        <BookItem v-bind:book="book" v-on:del-a-book="$emit('del-a-book', book.ID)" />
+        <BookItem v-bind:book="book" v-on:delete-book="$emit('delete-book', book.ID)" />
       </tbody>
       <tfoot>
         <tr>

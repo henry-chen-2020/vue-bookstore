@@ -25,28 +25,28 @@ export default Vue.extend({
   data() {
     return {
       name: {
-        value: undefined,
+        value: '',
         error: false
       },
       author: {
-        value: undefined,
+        value: '',
         error: false
       },
       isbn: {
-        value: undefined,
+        value: '',
         error: false
       },
       genre: {
-        value: undefined,
+        value: '',
         error: false
-    }
+      }
     }
   },
   methods: {
     addBook(evt) {
       console.log(evt);
       const keys = Object.keys(this._data);
-      keys.forEach(key => this[key].error = (this[key].value == undefined) );
+      keys.forEach(key => this[key].error = (this[key].value == '') );
       const error = keys.some(key => this[key].error);
       if (!error) {
         const payload = {
@@ -56,7 +56,7 @@ export default Vue.extend({
           Genre: this.genre.value
         }
         this.$emit('add-a-book', payload);
-        keys.forEach(key => this[key].value = undefined);
+        keys.forEach(key => this[key].value = '');
       }
     }
   }
