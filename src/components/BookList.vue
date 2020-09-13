@@ -7,8 +7,7 @@
     <table>
       <thead><BookHead /></thead>
       <tbody v-bind:key="book.ID" v-for="book in books">
-        <BookItem v-bind:book="book"
-          v-on:delete-book="$emit('delete-book', book.ID)" />
+        <BookItem v-bind:book="book" />
       </tbody>
       <tfoot>
         <tr>
@@ -17,7 +16,7 @@
             {{state}} a book:
           </td>
         </tr>
-        <BookForm v-on:add-a-book="$emit('add-a-book', $event)" />
+        <BookForm />
       </tfoot>
     </table>
   </div>

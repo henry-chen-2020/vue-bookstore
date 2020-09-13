@@ -6,7 +6,7 @@
     <td class="cell">{{book.Genre}}</td>
     <td class="action">
       <button v-on:click="updateBook" v-bind:disabled="updating">Update</button>
-      <button v-on:click="$emit('delete-book', book.ID)" v-bind:disabled="updating">Delete</button>
+      <button v-on:click="deleteBook" v-bind:disabled="updating">Delete</button>
     </td>
   </tr>
 </template>
@@ -26,6 +26,9 @@ export default Vue.extend({
     updateBook() {
       this.updating = true;
       updateBus.$emit('update-book', this.book);
+    },
+    deleteBook() {
+      updateBus.$emit('delete-book', this.book.ID);
     }
   },
   created() {

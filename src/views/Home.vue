@@ -1,8 +1,7 @@
 <template>
   <div class="home">
     <BookList v-bind:books="books" 
-      v-on:add-a-book="addBook" v-on:refresh="refresh" 
-      v-on:delete-book="deleteBook" v-on:delete-all="deleteAll" />
+      v-on:refresh="refresh" v-on:delete-all="deleteAll" />
   </div>
 </template>
 
@@ -80,6 +79,7 @@ export default {
     this.books = BOOKS;
     this.fetchBooks();
     updateBus.$on('add-a-book', (payload) => this.addBook(payload));
+    updateBus.$on('delete-book', (bookID) => this.deleteBook(bookID));
 }
 }
 </script>
