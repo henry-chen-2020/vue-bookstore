@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="tools">
       <button v-on:click="$emit('refresh')">Refresh</button>
       <button v-on:click="$emit('delete-all')">Delete All</button>     
     </div>
@@ -43,5 +43,8 @@ table {
   padding: 10px;
   border: true;
   border-spacing: 10px;
+}
+div.tools {
+  text-align: left;
 }
 </style>
