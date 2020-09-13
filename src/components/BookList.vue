@@ -9,13 +9,15 @@
       <tbody v-bind:key="book.ID" v-for="book in books">
         <BookItem v-bind:book="book" v-on:del-a-book="$emit('del-a-book', book.ID)" />
       </tbody>
-      <tr>
-        <td colspan="5">
-          <hr />
-          Add a book:
-        </td>
-      </tr>
-      <tfoot><BookForm v-on:add-a-book="$emit('add-a-book', $event)"/></tfoot>
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            <hr />
+            Add a book:
+          </td>
+        </tr>
+        <BookForm v-on:add-a-book="$emit('add-a-book', $event)"/>
+      </tfoot>
     </table>
   </div>
 </template>
