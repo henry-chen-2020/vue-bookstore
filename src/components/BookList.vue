@@ -7,16 +7,17 @@
     <table>
       <thead><BookHead /></thead>
       <tbody v-bind:key="book.ID" v-for="book in books">
-        <BookItem v-bind:book="book" v-on:delete-book="$emit('delete-book', book.ID)" />
+        <BookItem v-bind:book="book"
+          v-on:delete-book="$emit('delete-book', book.ID)" />
       </tbody>
       <tfoot>
         <tr>
           <td colspan="5">
             <hr />
-            Add a book:
+            {{state}} a book:
           </td>
         </tr>
-        <BookForm v-on:add-a-book="$emit('add-a-book', $event)"/>
+        <BookForm v-on:add-a-book="$emit('add-a-book', $event)" />
       </tfoot>
     </table>
   </div>
@@ -24,6 +25,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { updateBus } from '../main'
 import BookHead from './BookHead.vue'
 import BookItem from './BookItem.vue'
 import BookForm from './BookForm.vue'
@@ -34,7 +36,16 @@ export default Vue.extend({
     BookItem,
     BookForm
   },
-  props: ['books']
+  props: ['books'],
+  data() {
+    return {
+      state: 'Add'
+    }
+  },
+  created() {
+    updateBus.$on('update-book', () => this.state = 'Update' );
+    updateBus.$on('cancel-update', () => this.state = 'Add' );
+  }
 })
 </script>
 
@@ -43,6 +54,9 @@ table {
   padding: 10px;
   border: true;
   border-spacing: 10px;
+}
+tbody {
+  text-align: left;
 }
 div.tools {
   text-align: left;
