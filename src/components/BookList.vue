@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="tools">
       <button v-on:click="$emit('refresh')">Refresh</button>
       <button v-on:click="$emit('delete-all')">Delete All</button>     
     </div>
@@ -9,19 +9,22 @@
       <tbody v-bind:key="book.ID" v-for="book in books">
         <BookItem v-bind:book="book" />
       </tbody>
-      <tr>
-        <td colspan="5">
-          <hr />
-          Add a book:
-        </td>
-      </tr>
-      <tfoot><BookForm v-on:add-a-book="$emit('add-a-book', $event)"/></tfoot>
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            <hr />
+            {{state}} a book:
+          </td>
+        </tr>
+        <BookForm />
+      </tfoot>
     </table>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { updateBus } from '../main'
 import BookHead from './BookHead.vue'
 import BookItem from './BookItem.vue'
 import BookForm from './BookForm.vue'
@@ -32,7 +35,16 @@ export default Vue.extend({
     BookItem,
     BookForm
   },
-  props: ['books']
+  props: ['books'],
+  data() {
+    return {
+      state: 'Add'
+    }
+  },
+  created() {
+    updateBus.$on('update-book', () => this.state = 'Update' );
+    updateBus.$on('cancel-update', () => this.state = 'Add' );
+  }
 })
 </script>
 
@@ -41,5 +53,11 @@ table {
   padding: 10px;
   border: true;
   border-spacing: 10px;
+}
+tbody, tfoot {
+  text-align: left;
+}
+div.tools {
+  text-align: left;
 }
 </style>
