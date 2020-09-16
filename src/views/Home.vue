@@ -6,8 +6,7 @@
 
 <script>
 // @ is an alias to /src
-// import axios from 'axios'
-import uuid from 'uuid'
+import axios from 'axios'
 import { updateBus } from '../main'
 import BookList from '../components/BookList'
 const BOOKS = [{
@@ -29,6 +28,7 @@ const BOOKS = [{
         ISBN: "123456789",
         Genre: "sci-fi"
       }];
+const REST = 'http://localhost:53878';
 
 export default {
   name: 'home',
@@ -37,36 +37,41 @@ export default {
   },
   methods: {
     refresh() {
-      console.log("refersh");
+      console.log("#home: refersh");
       this.books = BOOKS;
       this.fetchBooks();
     },
     deleteAll() {
-      console.log("delete all");
-      this.books = [];
+      console.log("#home: delete all");
+      axios.delete(`${REST}/books`)
+      .then(() => this.books = [])
+      .catch(err => console.log(err));
     },
     addBook(payload) {
       if (payload.ID) {
-        console.log('#home, update a book', payload);
+        console.log('#home: update a book', payload);
         const idx = this.books.findIndex(book => book.ID == payload.ID);
-        this.books[idx] = Object.assign(this.books[idx], payload);
+        axios.put(`${REST}/book/${payload.ID}`, payload)
+        .then(() => this.books[idx] = Object.assign(this.books[idx], payload))
+        .catch(err => console.log(err));
       } else {
         console.log("#home: add a book", payload);
-        payload.ID = uuid();
-        this.books = [...this.books, payload];
+        axios.post(`${REST}/books`, payload)
+          .then(resp => this.books = [...this.books, resp])
+          .catch(err => console.log(err));
       }
       console.log('books: ' + this.books.length);
     },
     deleteBook(id) {
-      console.log('delete a book', id);
-      this.books = this.books.filter(book => book.ID != id);
+      console.log('#home: delete a book', id);
+      axios.delete(`${REST}/book/${id}`)
+      .then(() => this.books = this.books.filter(book => book.ID != id))
+      .catch(err => console.log(err));
     },
     fetchBooks() {
-    // axios.get('http://localhost:51946/books')
-    // axios.get('http://10.24.123.250:51946/books')
-    // .then(resp => this.books = resp.data)
-    // .catch(err => console.log('=====> fetch error', err));
-
+      axios.get(`${REST}/books`)
+      .then(resp => this.books = resp.data)
+      .catch(err => console.log('=====> fetch error', err));
     }
   },
   data() {
